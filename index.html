@@ -147,41 +147,53 @@
     <button id="moreBtn" class="morebtn">more</button>
 
     <script>
-    const logo = document.getElementById('logo');
-    const splat = document.getElementById('splat');
-    const hiddenText = document.getElementById('hiddenText');
-    const moreBtn = document.getElementById('moreBtn');
-    let holdTimer;
+        // Prevent double tap zoom on iOS
+        document.addEventListener('touchend', function(event) {
+            event.preventDefault();
+            event.target.click();
+        }, false);
 
-    logo.addEventListener('mousedown', startHold);
-    logo.addEventListener('touchstart', startHold);
-
-    logo.addEventListener('mouseup', cancelHold);
-    logo.addEventListener('touchend', cancelHold);
-
-    function startHold(e) {
-        e.preventDefault();
-        holdTimer = setTimeout(() => {
-            logo.classList.add('pop');
-            logo.addEventListener('animationend', () => {
-                logo.style.display = 'none';
-                splat.classList.add('splat-appear');
-                hiddenText.classList.add('text-appear');
-                moreBtn.classList.add('more-appear');
-            }, { once: true });
-        }, 4000); // 4 seconds
-    }
-
-    function cancelHold(e) {
-        e.preventDefault();
-        clearTimeout(holdTimer);
-        logo.classList.remove('bounce');
-    }
-
-    moreBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        window.location.href = "./more.html";
-    });
-</script>
+        const logo = document.getElementById('logo');
+        const splat = document.getElementById('splat');
+        const hiddenText = document.getElementById('hiddenText');
+        const moreBtn = document.getElementById('moreBtn');
+        let clickCount = 0;
+        let lastTap = 0;
+    
+        logo.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Prevent double tap from triggering multiple times
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            lastTap = currentTime;
+            
+            if (tapLength < 500 && tapLength > 0) {
+                return;
+            }
+            
+            clickCount++;
+            
+            if (clickCount === 8) {
+                logo.classList.add('pop');
+                logo.addEventListener('animationend', () => {
+                    logo.style.display = 'none';
+                    splat.classList.add('splat-appear');
+                    hiddenText.classList.add('text-appear');
+                    moreBtn.classList.add('more-appear');
+                }, { once: true });
+            } else {
+                logo.classList.add('bounce');
+                logo.addEventListener('animationend', () => {
+                    logo.classList.remove('bounce');
+                }, { once: true });
+            }
+        });
+    
+        moreBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            window.location.href = "./more.html";
+        });
+    </script>
 </body>
 </html>
