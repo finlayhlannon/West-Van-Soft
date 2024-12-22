@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>West Van Soft</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>West Van Soft - Ice Cream Card Game</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <style>
         :root {
@@ -22,43 +23,8 @@
             background: linear-gradient(45deg, var(--pastel-pink), var(--pastel-blue));
         }
 
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--dark-text);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark-text);
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--pastel-pink);
-        }
-
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -66,6 +32,7 @@
             background: url('static/ppl_bg.png') center/cover;
             color: white;
             position: relative;
+            padding: 2rem;
         }
 
         .hero::before {
@@ -84,13 +51,13 @@
         }
 
         .hero-quote {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .critics-section {
-            padding: 4rem 2rem;
+            padding: 2rem 1rem;
             background: white;
         }
 
@@ -98,14 +65,14 @@
             text-align: center;
             margin-bottom: 3rem;
             color: var(--dark-text);
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
         }
 
         .critic {
             display: flex;
-            align-items: center;
-            padding: 2rem;
-            margin-bottom: 4rem;
+            flex-direction: column;
+            padding: 1rem;
+            margin-bottom: 3rem;
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.6s, transform 0.6s;
@@ -116,79 +83,43 @@
             transform: translateY(0);
         }
 
-        .critic:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-
         .critic-image {
-            flex: 0 0 400px;
+            width: 100%;
             height: 300px;
             background: url('/api/placeholder/400/300') center/cover;
             border-radius: 1rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
         }
 
-
-
-        .critic-pav-image {
-            flex: 0 0 400px;
-            height:450px;
-            background: url('static/pav.png') center/cover;
-            border-radius: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .critic-mila-image {
-            flex: 0 0 400px;
-            height: 450px;
-            background: url('static/mila.png') center/cover;
-            border-radius: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .critic-mark-image {
-            flex: 0 0 400px;
-            height: 450px;
-            background: url('static/mark.png') center/cover;
-            border-radius: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .critic-andrea-image {
-            flex: 0 0 400px;
-            height: 450px;
-            background: url('static/andrea.png') center/cover;
-            border-radius: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        .critic-pippa-image {
-            flex: 0 0 400px;
-            height: 450px;
-            background: url('static/pippa.png') center/cover;
-            border-radius: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
+        .critic-pav-image,
+        .critic-mila-image,
+        .critic-mark-image,
+        .critic-andrea-image,
+        .critic-pippa-image,
         .critic-fin-image {
-            flex: 0 0 400px;
-            height: 450px;
-            background: url('static/fin.png') center/cover;
+            width: 100%;
+            height: 350px;
             border-radius: 1rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            background-position: center;
+            background-size: cover;
         }
+
+        .critic-pav-image { background-image: url('static/pav.png'); }
+        .critic-mila-image { background-image: url('static/mila.png'); }
+        .critic-mark-image { background-image: url('static/mark.png'); }
+        .critic-andrea-image { background-image: url('static/andrea.png'); }
+        .critic-pippa-image { background-image: url('static/pippa.png'); }
+        .critic-fin-image { background-image: url('static/fin.png'); }
 
         .critic-content {
-            flex: 1;
-            padding: 2rem;
-        }
-
-        .critic:nth-child(odd) .critic-content {
-            padding-left: 4rem;
-        }
-
-        .critic:nth-child(even) .critic-content {
-            padding-right: 4rem;
-            text-align: right;
+            padding: 1rem 0;
         }
 
         .critic-name {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: var(--dark-text);
             margin-bottom: 1rem;
         }
@@ -199,30 +130,30 @@
         }
 
         .about-section {
-            padding: 4rem 2rem;
+            padding: 2rem 1rem;
             background: white;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 2rem;
-            align-items: center;
         }
 
         .about-image {
-            width: 90%;
-            height: 380px;
+            width: 100%;
+            height: 300px;
             margin: 0 auto;
-            background: url('static/bg.png') center/95% no-repeat;
+            background: url('static/bg.png') center/contain no-repeat;
             border-radius: 1rem;
             background-color: white;
         }
 
         .about-content {
-            padding: 2rem;
+            padding: 1rem 0;
         }
 
         .about-content h2 {
             margin-bottom: 1rem;
             color: var(--dark-text);
+            font-size: clamp(1.5rem, 4vw, 2rem);
         }
 
         .about-content p {
@@ -244,17 +175,53 @@
             transform: translateY(-2px);
             background: var(--pastel-blue);
         }
+
+        @media (min-width: 768px) {
+            .critics-section {
+                padding: 4rem 2rem;
+            }
+
+            .critic {
+                flex-direction: row;
+                padding: 2rem;
+                margin-bottom: 4rem;
+            }
+
+            .critic:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+
+            .critic-content {
+                padding: 2rem;
+            }
+
+            .critic:nth-child(odd) .critic-content {
+                padding-left: 4rem;
+            }
+
+            .critic:nth-child(even) .critic-content {
+                padding-right: 4rem;
+                text-align: right;
+            }
+
+            .about-section {
+                grid-template-columns: 1fr 1fr;
+                padding: 4rem 2rem;
+            }
+
+            .critic-pav-image,
+            .critic-mila-image,
+            .critic-mark-image,
+            .critic-andrea-image,
+            .critic-pippa-image,
+            .critic-fin-image {
+                flex: 0 0 400px;
+                height: 450px;
+            }
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo">West Van Soft</div>
-        <div class="nav-links">
-            <a href="#critics">Critics</a>
-            <a href="#about">About</a>
-        </div>
-    </nav>
-
     <section class="hero">
         <div class="hero-content">
             <h1 class="hero-quote">"Life is like ice cream, enjoy it before it melts"</h1>
@@ -320,7 +287,7 @@
             <h2>About the Game</h2>
             <p>West Van Soft is a card game where players compete to create the drippiest ice cream combinations. Mix and match flavors, toppings, and cones to score points and become the ruler of West Van!</p>
             <p>Perfect for competitive players. Suitable for 3-8 players, ages Mila and up.</p>
-            <a href="https://drive.google.com/drive/folders/13H8oY4OlcdlLtJjnt2uZ4K3rz6FTtYFs?usp=sharing" class="button">Download Instructions</a>
+            <a href="google.com" class="button">Download Instructions</a>
         </div>
     </section>
 
