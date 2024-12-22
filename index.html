@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>West Van Soft</title>
+    <style>
+        html, body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: white;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #logo {
+            width: 50vw;
+            cursor: pointer;
+            transition: transform 0.2s ease-out;
+            z-index: 3;
+        }
+
+        .bounce {
+            animation: bounceAnimation 0.3s ease-out;
+        }
+
+        .pop {
+            animation: popAnimation 0.5s ease-out forwards;
+        }
+
+        #splat {
+            position: absolute;
+            width: 70vw;
+            opacity: 0;
+            z-index: 0;
+            margin-left: -50px;
+        }
+
+        .splat-appear {
+            animation: splatAnimation 0.3s ease-out forwards;
+        }
+
+        #hiddenText {
+            position: absolute;
+            width: 40vw;
+            opacity: 0;
+            z-index: 2;
+        }
+
+        .text-appear {
+            opacity: 1 !important;
+        }
+
+        .morebtn {
+            opacity: 0;
+            position: absolute;
+            z-index: 100;
+            background: none;
+            color: white;
+            border: 2px solid white;
+            margin-top:400px;
+            border-radius: 9999px;
+            padding: 1rem 2.5rem;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .more-appear {
+            opacity: 1 !important;
+        }
+
+        .morebtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes bounceAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes popAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(2); }
+            100% { 
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes splatAnimation {
+            0% { 
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% { 
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img id="logo" src="static/bg.png" alt="West Van Soft Logo">
+    <img id="splat" src="static/splat.svg" alt="Splat">
+    <img id="hiddenText" src="static/text.svg" alt="Splat">
+    <button id="moreBtn" class="morebtn">more</button>
+
+    <script>
+        const logo = document.getElementById('logo');
+        const splat = document.getElementById('splat');
+        const hiddenText = document.getElementById('hiddenText');
+        const moreBtn = document.getElementById('moreBtn');
+        let clickCount = 0;
+    
+        logo.addEventListener('click', () => {
+            clickCount++;
+            
+            if (clickCount === 8) {
+                logo.classList.add('pop');
+                logo.addEventListener('animationend', () => {
+                    logo.style.display = 'none';
+                    splat.classList.add('splat-appear');
+                    hiddenText.classList.add('text-appear');
+                    moreBtn.classList.add('more-appear');
+                }, { once: true });
+            } else {
+                logo.classList.add('bounce');
+                logo.addEventListener('animationend', () => {
+                    logo.classList.remove('bounce');
+                }, { once: true });
+            }
+        });
+    
+        document.getElementById("moreBtn").addEventListener("click", function (e) {
+            e.preventDefault();
+            window.location.href = "./more.html";
+        });
+    </script>
+    
+</body>
+</html>
